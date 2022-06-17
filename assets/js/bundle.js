@@ -3073,10 +3073,10 @@ class MovieHandler {
         };
         this.renderMovieCard = (movie) => {
             return `
-            <div class="w-11/12 bg-blue-200 rounded-md shadow-md p-10 mx-auto text-center flex flex-col">
-                <p class="text-center mb-5 text-lg font-bold">${movie.title}</p>
-                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-11/12 mx-auto">
-                <p class="my-5 text-center">Votes: ${movie.vote_average} ⭐️</p>
+            <div class="w-11/12 bg-blue-200 rounded-md shadow-md p-10 mx-auto text-center flex flex-col movie-card">
+                <p class="text-center mb-5 text-lg font-bold movie-title">${movie.title}</p>
+                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-11/12 mx-auto movie-poster">
+                <p class="my-5 text-center movie-votes">Votes: ${movie.vote_average} ⭐️</p>
             </div> 
        `;
         };
