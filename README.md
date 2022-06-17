@@ -42,6 +42,7 @@ Deployed Application (optional): [Flixster Deployed Site](https://iangarciag29.g
 
 ### Walkthrough Video
 
+![Walkthrough Video](https://media.giphy.com/media/49PSvJ0KRbyz7jlwXY/giphy.gif)
 
 ### Reflection
 
