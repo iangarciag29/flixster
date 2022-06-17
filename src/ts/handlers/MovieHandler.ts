@@ -92,7 +92,6 @@ export class MovieHandler {
 
     private endlessScroll = (): void => {
         const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-        console.log(this.page, this.limit, this.total);
         if (scrollTop + clientHeight >= scrollHeight - 5 &&
             this.hasMoreMovies(this.page, this.limit, this.total)) {
             this.page++;
