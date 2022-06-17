@@ -39,7 +39,6 @@ export class MovieHandler {
     }
 
     private handleCategoryChange = (): void => {
-        // @ts-ignore
         movieSearchInput.value = "";
         this.category = stringToCat(categorySelector.value);
         this.page = 1;
