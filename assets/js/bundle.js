@@ -2976,33 +2976,33 @@ class MovieHandler {
         this.movies = [];
         this.category = MOVIE_CATEGORIES.UPCOMING;
         this.page = 1;
+        this.limit = 30;
+        this.total = -1;
         this.userIsSearching = false;
         this.init = () => {
             categorySelector.value = this.category;
             this.fetchMoviesByCategory(this.page, this.category).then(data => {
-                this.movies = data;
+                this.total = data.total_results;
+                this.movies = data.results;
                 this.page++;
                 this.injectMovies();
             });
         };
         this.injectMovies = () => {
-            this.movies.forEach(movie => {
-                movieGrid.innerHTML += `
-            <div class="w-11/12 bg-blue-200 rounded-md shadow-md p-10 mx-auto">
-                <p class="text-center mb-5 text-xl font-bold">${movie.title}</p>
-                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-11/12 mx-auto">
-                <p class="mt-10 text-center">Votes: ${movie.vote_average} ⭐️</p>
-            </div> 
-       `;
+            console.log(this.movies);
+            this.movies.forEach((movie) => {
+                movieGrid.innerHTML += this.renderMovieCard(movie);
             });
         };
         this.handleCategoryChange = () => {
             // @ts-ignore
+            movieSearchInput.value = "";
             this.category = stringToCat(categorySelector.value);
             this.page = 1;
             this.fetchMoviesByCategory(this.page, this.category).then(data => {
                 this.clearMovies();
-                this.movies = data;
+                this.total = data.total_results;
+                this.movies = data.results;
                 this.page = 1;
                 this.injectMovies();
             });
@@ -3011,7 +3011,8 @@ class MovieHandler {
             if (movieSearchInput.value.length === 0) {
                 categorySelector.value = this.category;
                 this.fetchMoviesByCategory(this.page, this.category).then(data => {
-                    this.movies = data;
+                    this.movies = data.total_results;
+                    this.total = data.total_pages;
                     this.page++;
                     this.injectMovies();
                 });
@@ -3023,7 +3024,8 @@ class MovieHandler {
             this.page = 1;
             this.searchMovies(movieSearchInput.value, this.page).then(data => {
                 this.clearMovies();
-                this.movies = data;
+                this.movies = data.results;
+                this.total = data.total_results;
                 this.page = 1;
                 this.injectMovies();
             });
@@ -3034,15 +3036,53 @@ class MovieHandler {
         };
         this.fetchMoviesByCategory = (page, category) => {
             const promise = axios_default().get(`${API_URL}/movie/${category}?api_key=${API_KEY}&language=en-US&page=${page}`);
-            return promise.then(response => response.data.results);
+            return promise.then(response => response.data);
         };
         this.searchMovies = (query, page) => {
             const promise = axios_default().get(`${API_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=${page}&query=${query}&include_adult=false`);
-            return promise.then(response => response.data.results);
+            return promise.then(response => response.data);
+        };
+        this.endlessScroll = () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            console.log(this.page, this.limit, this.total);
+            if (scrollTop + clientHeight >= scrollHeight - 5 &&
+                this.hasMoreMovies(this.page, this.limit, this.total)) {
+                this.page++;
+                if (this.userIsSearching) {
+                    this.searchMovies(movieSearchInput.value, this.page).then(data => {
+                        this.movies = [...this.movies, data.results];
+                        data.results.forEach((movie) => {
+                            movieGrid.innerHTML += this.renderMovieCard(movie);
+                        });
+                    });
+                }
+                else {
+                    this.fetchMoviesByCategory(this.page, this.category).then(data => {
+                        this.movies = [...this.movies, data.results];
+                        data.results.forEach((movie) => {
+                            movieGrid.innerHTML += this.renderMovieCard(movie);
+                        });
+                    });
+                }
+            }
+        };
+        this.hasMoreMovies = (page, limit, total) => {
+            const startIndex = (page - 1) * limit + 1;
+            return total === 0 || startIndex < total;
+        };
+        this.renderMovieCard = (movie) => {
+            return `
+            <div class="w-11/12 bg-blue-200 rounded-md shadow-md p-10 mx-auto">
+                <p class="text-center mb-5 text-xl font-bold">${movie.title}</p>
+                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-11/12 mx-auto">
+                <p class="mt-10 text-center">Votes: ${movie.vote_average} ⭐️</p>
+            </div> 
+       `;
         };
         this.loadEventListeners = () => {
             categorySelector.addEventListener("change", this.handleCategoryChange);
             movieSearchInput.addEventListener("keyup", this.handleInputType);
+            window.addEventListener("scroll", this.endlessScroll, { passive: true });
         };
         this.init();
         this.loadEventListeners();
