@@ -1,5 +1,6 @@
 import {iMovie, MOVIE_CATEGORIES, stringToCat} from "../types/app.types";
 import axios from "axios";
+import MicroModal from "micromodal";
 
 const categorySelector = document.querySelector<HTMLSelectElement>("#moviesCategories")!;
 const movieSearchInput = document.querySelector<HTMLInputElement>("#movie-search")!;
@@ -17,6 +18,7 @@ export class MovieHandler {
     private userIsSearching = false;
 
     constructor() {
+        MicroModal.init();
         this.init();
         this.loadEventListeners();
     }
@@ -32,7 +34,6 @@ export class MovieHandler {
     }
 
     private injectMovies = (): void => {
-        console.log(this.movies)
         this.movies.forEach((movie: iMovie) => {
             movieGrid.innerHTML += this.renderMovieCard(movie);
         });
@@ -119,12 +120,36 @@ export class MovieHandler {
 
     private renderMovieCard = (movie: iMovie) => {
         return `
-            <div class="w-11/12 bg-blue-200 rounded-md shadow-md p-10 mx-auto">
-                <p class="text-center mb-5 text-xl font-bold">${movie.title}</p>
+            <div class="w-11/12 bg-blue-200 rounded-md shadow-md p-10 mx-auto text-center flex flex-col">
+                <p class="text-center mb-5 text-lg font-bold">${movie.title}</p>
                 <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-11/12 mx-auto">
-                <p class="mt-10 text-center">Votes: ${movie.vote_average} ⭐️</p>
+                <p class="my-5 text-center">Votes: ${movie.vote_average} ⭐️</p>
             </div> 
        `
+    }
+
+    private getMovieVideo = (id: number) => {
+        const promise = axios.get(`${API_URL}/movie/${id}/videos?api_key=${API_KEY}`);
+        return promise.then(response => response.data);
+    }
+
+    private toggleModal = (movie: iMovie) => {
+        console.log(6)
+        this.getMovieVideo(movie.id).then(data => {
+            const title = document.querySelector<HTMLHeadingElement>("#movie-details-title")!;
+            const content = document.querySelector<HTMLDivElement>("#movie-details-content")!;
+            title.innerText = movie.title;
+            content.innerHTML = `
+            <iframe
+                    src="https://www.youtube.com/embed/${data.results[0]}"
+                    title="${movie.title}"
+                    class="w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+        `
+            MicroModal.show("movie-details")
+        });
     }
 
     private loadEventListeners = (): void => {

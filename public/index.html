@@ -13,7 +13,7 @@
 <body class="antialized">
 <div class="wrapper relative">
     <header class="w-full text-center bg-sky-900 py-10">
-        <h3 class="font-semibold text-3xl text-white">🎬 Flixster 2.0 🎥</h3>
+        <a href="/"><h3 class="font-semibold text-3xl text-white">🎬 Flixster 🎥</h3></a>
     </header>
     <div class="main min-h-[40vh] container mx-auto pt-10 pb-30">
         <div class="flex flex-col md:flex-row">
@@ -66,6 +66,20 @@
                   clip-rule="evenodd"/>
         </svg>
     </button>
+</div>
+<div class="modal micromodal-slide" id="movie-details" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="movie-details-title">
+            <header class="modal__header">
+                <h2 class="modal__title text-sky-900" id="movie-details-title">
+                    Movie title
+                </h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+            <main class="modal__content" id="movie-details-content">
+            </main>
+        </div>
+    </div>
 </div>
 <script src="assets/js/bundle.js"></script>
 </body>
