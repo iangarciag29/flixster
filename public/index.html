@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Flixster</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+<body class="antialized">
+<div class="wrapper relative">
+    <header class="w-full text-center bg-sky-900 py-10">
+        <h3 class="font-semibold text-3xl text-white">🎬 Flixster 🎥</h3>
+    </header>
+    <div class="main min-h-[40vh] container mx-auto pt-10 pb-30">
+        <div class="flex flex-col md:flex-row">
+            <div class="w-full md:w-1/2 text-center md:text-left grid items-center mb-10 md:mb-0">
+                <h2 class="font-semibold text-xl ml-5">🆕 New movies</h2>
+            </div>
+            <div class="w-full md:w-1/2 px-5 md:px-0">
+                <form class="mr-0 md:mr-5">
+                    <label for="default-search"
+                           class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+                    <div class="relative">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <input type="search" id="default-search"
+                               class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                               placeholder="Search for movies..." required>
+                        <button type="submit"
+                                class="text-white absolute right-2.5 bottom-2.5 bg-sky-900 hover:bg-sky-800 font-medium rounded-lg text-sm px-4 py-2">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="grid gap-x-5 gap-y-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-10" id="movieGrid">
+        </div>
+    </div>
+    <footer class="w-full bg-gray-50 font-light text-xs sm:text-sm text-center py-10 inline-block">
+        <p>Flixster | <img src="assets/img/metalogo.svg" style="height: 14px; margin-top: -5px; display: inline-flex"
+                           alt="Meta Platforms Inc."> University Engineering Track | Summer 2022.</p>
+    </footer>
+    <button class="fixed bottom-10 right-10 bg-sky-800 p-3 rounded-lg text-gray-50 shadow-lg hidden transition-all"
+            onclick="scrollToTop()" id="scrollToTopBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"/>
+        </svg>
+    </button>
+</div>
+<script src="assets/js/bundle.js"></script>
+</body>
+</html>
