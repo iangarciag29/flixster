@@ -3085,7 +3085,6 @@ class MovieHandler {
             return promise.then(response => response.data);
         };
         this.toggleModal = (movie) => {
-            console.log(6);
             this.getMovieVideo(movie.id).then(data => {
                 const title = document.querySelector("#movie-details-title");
                 const content = document.querySelector("#movie-details-content");
