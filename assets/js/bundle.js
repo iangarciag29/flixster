@@ -2971,8 +2971,8 @@ function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable
 
 
 const categorySelector = document.querySelector("#moviesCategories");
-const movieSearchInput = document.querySelector("#movie-search");
-const movieGrid = document.querySelector("#movieGrid");
+const movieSearchInput = document.querySelector("#search-input");
+const movieGrid = document.querySelector("#movies-grid");
 const API_URL = "https://api.themoviedb.org/3";
 const API_KEY = "881c3d7f0e31a65d7ef2c972773ad7d3";
 class MovieHandler {
