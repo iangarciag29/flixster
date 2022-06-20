@@ -3,8 +3,8 @@ import axios from "axios";
 import MicroModal from "micromodal";
 
 const categorySelector = document.querySelector<HTMLSelectElement>("#moviesCategories")!;
-const movieSearchInput = document.querySelector<HTMLInputElement>("#movie-search")!;
-const movieGrid = document.querySelector<HTMLDivElement>("#movieGrid")!;
+const movieSearchInput = document.querySelector<HTMLInputElement>("#search-input")!;
+const movieGrid = document.querySelector<HTMLDivElement>("#movies-grid")!;
 
 const API_URL: string = "https://api.themoviedb.org/3"
 const API_KEY: string = "881c3d7f0e31a65d7ef2c972773ad7d3";
