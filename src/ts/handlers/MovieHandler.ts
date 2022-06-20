@@ -134,7 +134,6 @@ export class MovieHandler {
     }
 
     private toggleModal = (movie: iMovie) => {
-        console.log(6)
         this.getMovieVideo(movie.id).then(data => {
             const title = document.querySelector<HTMLHeadingElement>("#movie-details-title")!;
             const content = document.querySelector<HTMLDivElement>("#movie-details-content")!;
